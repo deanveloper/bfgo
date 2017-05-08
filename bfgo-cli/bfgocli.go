@@ -20,7 +20,8 @@ func main() {
 
     flag.Usage = func() {
         fmt.Fprintf(os.Stderr, "Usage: %s <bf | file.bf> [flags...]\n", os.Args[0])
-        fmt.Fprintln(os.Stderr, "  First arg may be brainfuck code, or a file if it ends with .b or .bf")
+        fmt.Fprintln(os.Stderr, "  (First arg may be brainfuck code, or a file if it ends with .b or .bf)")
+        fmt.Fprintln(os.Stderr)
         flag.PrintDefaults()
     }
 
