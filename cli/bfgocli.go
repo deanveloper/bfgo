@@ -7,6 +7,7 @@ import (
     "io"
     "io/ioutil"
     "os"
+    "strings"
 )
 
 func main() {
@@ -18,7 +19,8 @@ func main() {
     outputS := flag.String("out", "stdout", "Output destination. \"stdout\" for cli output, otherwise a filename.")
 
     flag.Usage = func() {
-        fmt.Fprintf(os.Stderr, "Usage: %s [file.bf] [flags...]\n", os.Args[0])
+        fmt.Fprintf(os.Stderr, "Usage: %s <bf | file.bf> [flags...]\n", os.Args[0])
+        fmt.Fprintln(os.Stderr, "  First arg may be brainfuck code, or a file if it ends with .b or .bf")
         flag.PrintDefaults()
     }
 
@@ -29,10 +31,16 @@ func main() {
         return
     }
 
-    bf, err := ioutil.ReadFile(flag.Arg(0))
-    if err != nil {
-        fmt.Println("Error: " + err.Error())
-        return
+    var bf []byte
+    if strings.HasSuffix(flag.Arg(0), ".b") || strings.HasSuffix(flag.Arg(0), ".bf") {
+        var err error
+        bf, err = ioutil.ReadFile(flag.Arg(0))
+        if err != nil {
+            fmt.Println("Error: " + err.Error())
+            return
+        }
+    } else {
+        bf = []byte(flag.Arg(0))
     }
 
     var input io.Reader
