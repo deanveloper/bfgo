@@ -34,7 +34,7 @@ func DefaultSettings() *Settings {
         EOFNoChange:      false,
         EOFDefault:       10,
         KeepCR:           false,
-        InitialArraySize: 30000,
+        InitialArraySize: 30,
         Input:            os.Stdin,
         Output:           os.Stdout,
     }
