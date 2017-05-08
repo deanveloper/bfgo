@@ -4,36 +4,31 @@ import (
     "flag"
     "fmt"
     "github.com/deanveloper/bfgo"
+    flags "github.com/jessevdk/go-flags"
     "io"
     "io/ioutil"
     "os"
     "strings"
 )
 
+type options struct {
+    EOFNoChange    bool `short:"n" long:"eofnochange" description:"Decides if \",\" should change a cell on EOF. Overrides -d"`
+    EOFDefault     byte `short:"d" long:"eofdefault" description:"Decides what \",\" should set a cell to on EOF."`
+    KeepCR         bool `short:"c" long:"keepcr" description:"Decides if CR should be kept in CRLF linebreaks"`
+    InitialArrSize uint64 `short:"s" long:"initialarrsize" description:"Initial size for the tape"`
+    Input          string `short:"i" long:"input" description:"Input source. \"stdin\" for cli input, \"!\" for BF input, otherwise name of a file."`
+    Output         string `short:"o" long:"output" description:"Output destination. \"stdout\" for cli output, otherwise a filename."`
+}
+
 func main() {
-    noChange := flag.Bool("eofnc", false, "Decides if the cell should change on input if input is EOF. True means no change.")
-    eofDefault := flag.Uint("eof", 10, "What should be considered as input on EOF. Overridden if eofnc=true")
-    keepCr := flag.Bool("keepcr", false, "Whether the CR in CRLF input lines should be kept.")
-    initialArrSize := flag.Uint("init", 30, "Initial size of the tape used")
-    inputS := flag.String("in", "stdin", "Input source. \"stdin\" for cli input, \"!\" for BF input, otherwise name of a file.")
-    outputS := flag.String("out", "stdout", "Output destination. \"stdout\" for cli output, otherwise a filename.")
-
-    flag.Usage = func() {
-        fmt.Fprintf(os.Stderr, "Usage: %s <bf | file.bf> [flags...]\n", os.Args[0])
-        fmt.Fprintln(os.Stderr, "  (First arg may be brainfuck code, or a file if it ends with .b or .bf)")
-        fmt.Fprintln(os.Stderr)
-        flag.PrintDefaults()
-    }
-
-    flag.Parse()
-
-    if flag.NArg() != 1 {
-        flag.Usage()
-        return
+    opts := options{}
+    args, err := flags.Parse(&opts)
+    if err != nil {
+        panic(err)
     }
 
     var bf []byte
-    if strings.HasSuffix(flag.Arg(0), ".b") || strings.HasSuffix(flag.Arg(0), ".bf") {
+    if strings.HasSuffix(args[0], ".b") || strings.HasSuffix(args[0], ".bf") {
         var err error
         bf, err = ioutil.ReadFile(flag.Arg(0))
         if err != nil {
@@ -47,13 +42,13 @@ func main() {
     var input io.Reader
     var output io.Writer
 
-    if *inputS == "stdin" {
+    if opts.Input == "stdin" {
         input = os.Stdin
-    } else if *inputS == "!" {
+    } else if opts.Input == "!" {
         temp := strings.SplitN(string(bf), "!", 2)[0]
         input = strings.NewReader(temp)
     } else {
-        file, err := os.Open(*inputS)
+        file, err := os.Open(opts.Input)
         if err != nil {
             fmt.Println("Error: " + err.Error())
             return
@@ -61,10 +56,10 @@ func main() {
         input = file
     }
 
-    if *outputS == "stdout" {
+    if opts.Output == "stdout" {
         output = os.Stdout
     } else {
-        file, err := os.Open(*outputS)
+        file, err := os.Open(opts.Output)
         if err != nil {
             fmt.Println("Error: " + err.Error())
             return
@@ -72,12 +67,12 @@ func main() {
         output = file
     }
     settings := &bfgo.Settings{
-        EOFNoChange: *noChange,
-        EOFDefault: byte(*eofDefault),
-        KeepCR: *keepCr,
-        InitialArraySize: uint64(*initialArrSize),
-        Input: input,
-        Output: output,
+        EOFNoChange:      opts.EOFNoChange,
+        EOFDefault:       opts.EOFDefault,
+        KeepCR:           opts.KeepCR,
+        InitialArraySize: opts.InitialArrSize,
+        Input:            input,
+        Output:           output,
     }
 
     bfgo.RunWithSettings(bf, settings)
