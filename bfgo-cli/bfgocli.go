@@ -1,9 +1,9 @@
 package main
 
-import "flag"
 import (
-    "../../bfgo"
+    "flag"
     "fmt"
+    "github.com/deanveloper/bfgo"
     "io"
     "io/ioutil"
     "os"
