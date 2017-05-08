@@ -49,6 +49,9 @@ func main() {
 
     if *inputS == "stdin" {
         input = os.Stdin
+    } else if *inputS == "!" {
+        temp := strings.SplitN(string(bf), "!", 2)[0]
+        input = strings.NewReader(temp)
     } else {
         file, err := os.Open(*inputS)
         if err != nil {
