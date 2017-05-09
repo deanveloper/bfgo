@@ -25,6 +25,7 @@ func main() {
     args, err := flags.Parse(&opts)
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error: %s\n", err)
+        return
     }
 
     var bf []byte
