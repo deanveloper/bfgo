@@ -22,7 +22,10 @@ type options struct {
 func main() {
     log.SetFlags(0)
     opts := options{}
-    args, err := flags.Parse(&opts)
+    parser := flags.NewParser(&opts, flags.Default)
+    parser.ArgsRequired = true
+    parser.Usage = "bfgo-cli <bf | file.bf> [OPTIONS]"
+    args, err := parser.Parse()
     if err != nil {
         if err.(*flags.Error).Type == flags.ErrHelp {
             os.Exit(1)
