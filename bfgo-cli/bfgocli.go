@@ -21,6 +21,7 @@ type options struct {
 }
 
 func main() {
+    log.SetFlags(0)
     opts := options{}
     args, err := flags.Parse(&opts)
     if err != nil {
