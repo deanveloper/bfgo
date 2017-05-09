@@ -24,7 +24,7 @@ func main() {
     log.SetFlags(0)
     opts := options{}
     args, err := flags.Parse(&opts)
-    if err != nil {
+    if err != nil && err.(flags.Error).Type != flags.ErrHelp {
         log.Fatalln("Error:", err)
     }
 
