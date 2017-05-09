@@ -62,7 +62,7 @@ func main() {
         input = file
     }
 
-    if opts.Output == "" || opts.Output == "stdout" {
+    if opts.Output == "stdout" {
         output = os.Stdout
     } else {
         file, err := os.Open(opts.Output)
@@ -79,6 +79,8 @@ func main() {
         Input:            input,
         Output:           output,
     }
+
+    output.Write([]byte("starting bf interpreter"))
 
     bfgo.RunWithSettings(bf, settings)
 }
