@@ -27,20 +27,39 @@ I have exposed this as both a library and a command line interface.
 ----
 # Library Usage
 Usage for the library is simple. For basic brainfuck programs, import
-`github.com/deanveloper/bfgo` and call `bfgo.Run(codeBytes)`. There are some
-nifty settings you can include though, which can be run with `bfgo.RunWithSettings(codeBytes, settings)`.
+`github.com/deanveloper/bfgo` (remember to `go get` first) and call `bfgo.Run(codeBytes)`.
+There are some nifty settings you can include though, which can be used
+with `bfgo.RunWithSettings(codeBytes, settings)`.
 
 ## Settings
 | Setting | Description | Default |
 | ------- | ----------- | ------- |
-| EOFNoChange | Whether EOF on input should change the current cell or not | `false` |
-| EOFDefault |  Default byte when EOF is run. Overridden by EOFChange. | `10 (\n)` |
+| EOFNoChange | Decides if `,` should change a cell or not on EOF. Overrides `EOFDefault` | `false` |
+| EOFDefault | Decides what `,` should set a cell to on EOF. | `10 (\n)` |
 | KeepCR | Whether to keep the CR (`\r`) in CRLF (`\r\n`) line breaks | `false` |
-| InitialArraySize | Whether EOF on input should change the current cell or not | `false` |
+| InitialArraySize | The initial size of the array (tape), which expands to the right when needed | `false` |
 | Input | Where to take input from | `os.Stdin` |
 | Output | Where to send output to | `os.Stdout` |
 
 # Command Line Usage
+Installation: `go get github.com/deanveloper/bfgo-cli`
 
+Now that you have it installed, you can run any code with `bfgo-cli <code>`.
+On the other hand, you can also use some very nifty options as well!
+
+## Options
+| Flag | Description | Default |
+| ---- | ----------- | ------- |
+| `-n` `-eofnochange` | Decides if `,` should change a cell or not on EOF, overrides `-d` | `false` |
+| `-d` `-eofdefault` | Decides what `,` should set a cell to on EOF | `10 (\n)` |
+| `-c` `-keepcr` | Whether to keep the CR (`\r`) in CRLF (`\r\n`) line breaks | `false` |
+| `-s` `-initialarrsize` | The initial size of the array (tape), which expands to the right when needed | `30` |
+| `-i` `-input` | Input source. "stdin" for cli input, `!` for `<bf>!input` input, otherwise a filename | `stdin` |
+| `-o` `-output` | Output destination. "stdout" for cli output, otherwise a filename. | `stdout` |
+
+-----
+# Donations
+Any donations made are greatly appreciated! They can be sent to my [PayPal]!
 
 [Go]: https://golang.org/
+[PayPal]: https://paypal.me/Dean98
