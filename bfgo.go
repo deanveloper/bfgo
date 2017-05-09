@@ -15,7 +15,7 @@ type Settings struct {
     // Whether to keep carriage returns ('\r') in inputs
     KeepCR bool
 
-    // Initial array size
+    // The initial size of the array (tape), which expands to the right when needed
     InitialArraySize uint64
 
     // Where to take input from

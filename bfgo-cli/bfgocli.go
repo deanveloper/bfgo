@@ -13,9 +13,9 @@ import (
 type options struct {
     EOFNoChange    bool `short:"n" long:"eofnochange" description:"Decides if \",\" should change a cell on EOF. Overrides -d"`
     EOFDefault     byte `short:"d" long:"eofdefault" default:"10" description:"Decides what \",\" should set a cell to on EOF."`
-    KeepCR         bool `short:"c" long:"keepcr" description:"Decides if CR should be kept in CRLF linebreaks"`
-    InitialArrSize uint64 `short:"s" long:"initialarrsize" default:"30" description:"Initial size for the tape"`
-    Input          string `short:"i" long:"input" default:"stdin" description:"Input source. \"stdin\" for cli input, \"!\" for BF input, otherwise name of a file."`
+    KeepCR         bool `short:"c" long:"keepcr" description:"Whether to keep the CR (\"\r\") in CRLF (\"\r\n\") line breaks"`
+    InitialArrSize uint64 `short:"s" long:"initialarrsize" default:"30" description:"The initial size of the array (tape), which expands to the right when needed"`
+    Input          string `short:"i" long:"input" default:"stdin" description:"Input source. \"stdin\" for cli input, \"!\" for \"<bf>!input\" input, otherwise a filename"`
     Output         string `short:"o" long:"output" default:"stdout" description:"Output destination. \"stdout\" for cli output, otherwise a filename."`
 }
 
