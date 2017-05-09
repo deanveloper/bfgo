@@ -2,11 +2,11 @@ package main
 
 import (
     "flag"
-    "fmt"
     "github.com/deanveloper/bfgo"
     flags "github.com/jessevdk/go-flags"
     "io"
     "io/ioutil"
+    "log"
     "os"
     "strings"
 )
@@ -24,8 +24,11 @@ func main() {
     opts := options{}
     args, err := flags.Parse(&opts)
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error: %s\n", err)
-        return
+        log.Fatalln("Error:", err)
+    }
+
+    if len(args) != 1 {
+        log.Fatalln("Error: Not enough arguments! Use bfgo-cli -h for help.")
     }
 
     var bf []byte
@@ -33,8 +36,7 @@ func main() {
         var err error
         bf, err = ioutil.ReadFile(flag.Arg(0))
         if err != nil {
-            fmt.Println("Error: " + err.Error())
-            return
+            log.Fatalln("Error:", err)
         }
     } else {
         bf = []byte(flag.Arg(0))
@@ -51,8 +53,7 @@ func main() {
     } else {
         file, err := os.Open(opts.Input)
         if err != nil {
-            fmt.Println("Error: " + err.Error())
-            return
+            log.Fatalln("Error:", err)
         }
         input = file
     }
@@ -62,8 +63,7 @@ func main() {
     } else {
         file, err := os.Open(opts.Output)
         if err != nil {
-            fmt.Println("Error: " + err.Error())
-            return
+            log.Fatalln("Error:", err)
         }
         output = file
     }
