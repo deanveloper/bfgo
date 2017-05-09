@@ -24,7 +24,10 @@ func main() {
     log.SetFlags(0)
     opts := options{}
     args, err := flags.Parse(&opts)
-    if err != nil && err.(*flags.Error).Type != flags.ErrHelp {
+    if err.(*flags.Error).Type == flags.ErrHelp {
+        os.Exit(1)
+    }
+    if err != nil {
         log.Fatalln("Error:", err)
     }
 
