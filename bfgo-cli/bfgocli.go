@@ -1,7 +1,6 @@
 package main
 
 import (
-    "flag"
     "github.com/deanveloper/bfgo"
     flags "github.com/jessevdk/go-flags"
     "io"
@@ -38,12 +37,12 @@ func main() {
     var bf []byte
     if strings.HasSuffix(args[0], ".b") || strings.HasSuffix(args[0], ".bf") {
         var err error
-        bf, err = ioutil.ReadFile(flag.Arg(0))
+        bf, err = ioutil.ReadFile(args[0])
         if err != nil {
             log.Fatalln("Error:", err)
         }
     } else {
-        bf = []byte(flag.Arg(0))
+        bf = []byte(args[0])
     }
 
     var input io.Reader
@@ -52,7 +51,7 @@ func main() {
     if opts.Input == "stdin" {
         input = os.Stdin
     } else if opts.Input == "!" {
-        temp := strings.SplitN(string(bf), "!", 2)[0]
+        temp := strings.SplitN(string(bf), "!", 2)[1]
         input = strings.NewReader(temp)
     } else {
         file, err := os.Open(opts.Input)
@@ -79,8 +78,6 @@ func main() {
         Input:            input,
         Output:           output,
     }
-
-    output.Write([]byte("starting bf interpreter"))
 
     bfgo.RunWithSettings(bf, settings)
 }
