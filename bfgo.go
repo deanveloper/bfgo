@@ -18,8 +18,10 @@ type Settings struct {
     // Initial array size
     InitialArraySize uint64
 
+    // Where to take input from
     Input io.Reader
 
+    // Where to send output to
     Output io.Writer
 }
 
