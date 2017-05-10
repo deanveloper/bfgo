@@ -42,7 +42,7 @@ with `bfgo.RunWithSettings(codeBytes, settings)`.
 | Output | Where to send output to | `os.Stdout` |
 
 # Command Line Usage
-Installation: `go get github.com/deanveloper/bfgo-cli`
+Installation: `go get github.com/deanveloper/bfgo/bfgo-cli`
 
 Now that you have it installed, you can run any code with `bfgo-cli <code>`.
 On the other hand, you can also use some very nifty options as well!
@@ -59,7 +59,8 @@ On the other hand, you can also use some very nifty options as well!
 
 -----
 # Donations
-Any donations made are greatly appreciated! They can be sent to my [PayPal]!
+Any donations made are greatly appreciated, even the ones as small as a pack of Ramen.
+They can be sent directly to my [PayPal]!
 
 [Go]: https://golang.org/
 [PayPal]: https://paypal.me/Dean98
