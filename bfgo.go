@@ -3,6 +3,7 @@ package bfgo
 import (
     "io"
     "os"
+    "strings"
 )
 
 // Settings for RunWithSettings
@@ -49,6 +50,9 @@ func Run(code []byte) {
 
 // Runs given BF code with the given settings
 func RunWithSettings(code []byte, settings *Settings) {
+    if !settings.KeepCR {
+        code = []byte(strings.Replace(string(code), "\r", "", -1))
+    }
     tape := make([]byte, settings.InitialArraySize)
     tapeIndex := 0
     for i := 0; i < len(code); i++ {
