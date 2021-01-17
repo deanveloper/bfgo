@@ -57,12 +57,4 @@ On the other hand, you can also use some very nifty options as well!
 | `-i` `-input` | Input source. "stdin" for cli input, `!` for `<bf>!input` input, otherwise a filename | `stdin` |
 | `-o` `-output` | Output destination. "stdout" for cli output, otherwise a filename. | `stdout` |
 
------
-# Donations
-Any donations made are greatly appreciated, even the ones as small as a pack of Ramen.
-They can be sent directly to my [PayPal]!
-
-[![PayPal](https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/200px-PayPal.svg.png)][PayPal]
-
 [Go]: https://golang.org/
-[PayPal]: https://paypal.me/Dean98
